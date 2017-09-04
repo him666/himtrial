@@ -1,2 +1,10 @@
 # himtrial
-clar vid trial
+# install 
+yarn install --save
+
+# run  tests 
+yarn test
+
+# run app
+
+yarn start 
