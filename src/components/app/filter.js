@@ -11,12 +11,33 @@ const Filter = () => {
     export default Filter*/
 
 import React, {Component} from 'react'
-
+import Home from '../home'
+import PropTypes from "prop-types";
+import { push } from 'react-router-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 class Filter extends Component {
+    constructor(){
+        super()
+        this.state = {
+            filter: ''
+        }
+    }
+
+    updateSearch(event){
+       // console.log(this.props)
+       // console.log('yo')
+       this.setState({filter: this.refs.filterInput.value})
+       console.log(this)
+    }
     render() {
         const { filterVal, filterUpdate } = this.props
+        let filteredTitles = this.props.titles.filter((title)=>{
+            return title.title.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
+        })
+        console.log(this)
         return (
-            <form>
+            <div>
                 <div className="search-bar">
                     <input type="text"
                       className="input-xs"
@@ -24,12 +45,37 @@ class Filter extends Component {
                       placeholder="Búsqueda"
                       value={filterVal}
                         onChange={()=> {
-                            this.refs.filterInput.value
+                            //console.log(this.refs.filterInput.value)
+                           this.updateSearch()
                         }}
                       />
                 </div>
-            </form>
+                <div>
+    
+    <section className="grid-container" >
+      <br/><br/>
+      {filteredTitles.map((title)=>{
+                    return <button key={title.title}  onClick={() => this.props.changePage(title.id)}><img src={title.img} alt={title.title} className="img-title"/></button>
+                })}
+      </section>
+  </div>
+               
+     
+                
+            </div>
         )
     }
 }
-export default Filter
+const mapDispatchToProps = dispatch => bindActionCreators({
+    changePage: (id) => push("/details"+"?id="+id)
+  }, dispatch)
+  
+  Filter.PropTypes = {
+    titles: PropTypes.object.isRequired,
+    filter: PropTypes.object.isRequired
+  }
+  export default connect(
+    null, 
+    mapDispatchToProps
+  )(Filter)
+

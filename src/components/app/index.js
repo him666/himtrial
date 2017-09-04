@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Home from '../home'
+
 import Header from './header'
 import Filter from './filter'
-
+import Home from '../home'
 
  const App = (titles) => (
 
@@ -11,7 +11,7 @@ import Filter from './filter'
     <Header />
     <br/><br/>
     <Filter {...titles} />
-     <Home {...titles}/>
+    <Home {...titles} />
   </div>
 )
 export default App 

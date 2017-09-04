@@ -19,7 +19,7 @@ const Home = (props) => {
     
     <section className="grid-container" >
       <br/><br/>
-      {renderTitlesList(props.titles)}
+      
       </section>
   </div>
   )

@@ -19,6 +19,7 @@ const AppContainer = createReactClass({
     let info = JSON.stringify(this.props.titles)
     let ids = info.match(/"id":"(\d+)/g)
     let titles = info.match(/"title":"([^"]{1,})/g)
+    console.log(titles)
     let imgs = info.match(/image_large":"([^"]{1,})/g)
     let arr  = []
     ids = JSON
