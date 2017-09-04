@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 const Detail = (props) => {
     const style = {
-        backgroundImage: 'url(' + props.imgBack + ')'
+        backgroundImage: 'url(' + props.imgBack + ')',
+        backgroundRepeat: 'no-repeat'
     }
     let rating = props.rating == "null" ? "R" : props.rating
     let subbed = props.subbed == "true" ? "subtitulada" : undefined
