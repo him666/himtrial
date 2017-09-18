@@ -12,57 +12,64 @@ const AboutContainer = createReactClass({
             .showDetails(this.props.location.search.replace("?id=", ""))
     },
     getInfoDetails() {
-        let info = JSON.stringify(this.props.details)
-        let title = JSON.stringify(info.match(/title":"([^"]{1,})/g)).split(",")[0]
-        .replace(/title/g, "")
-        .replace(/[^A-zÀ-ÿ0-9,\s]+/g, "")
-        .replace(/\\/g, "")
-        .replace("[", "")
-        let imgBack = JSON.stringify(info.match(/image_background":"([^"]{1,})/g))
-        .replace(/[^A-zÀ-ÿ0-9,.:/-\s]+/g, "")
-        .replace(/image_background\\:\\/g, "")
-        .replace("[", "")
-        .replace("]", "")
-        let imgFront = JSON.stringify(info.match(/image_small":"([^"]{1,})/g))
-        .replace(/[^A-zÀ-ÿ0-9,.:/-\s]+/g, "")
-        .replace(/image_small\\:\\/g, "")
-        .replace("[", "")
-        .replace("]", "")
-        let description = JSON.stringify(info.match(/large_description":"([^"]{1,})/g))
-        .replace(/large_description/g, "")
-        .replace(/[^A-zÀ-ÿ0-9,\s]+/g, "")
-        .replace(/\\/g, "")
-        .replace("[", "")
-        .replace("]","")
-        let year = JSON.stringify(info.match(/publishyear":"([^"]{1,})/g))
-        .replace(/[^0-9,]+/g, "")
-        let duration = JSON.stringify(info.match(/duration":"([^"]{1,})/g)).split(",")[0]
-        .replace(/[^0-9:]+/g, "").replace(":","").replace(":","h ").replace(":","min ")
-        +"s"
-        let subbed = JSON.stringify(info.match(/subbed":"([^"]{1,})/g))
-        .replace(/subbed/g, "").replace(/[^A-z]+/g, "").replace(/\[|\]|\\/g,"")
-        let dubbed = JSON.stringify(info.match(/dubbed":"([^"]{1,})/g))
-        .replace(/dubbed/g, "").replace(/[^A-z]+/g, "").replace(/\[|\]|\\/g,"")
-        let rating = JSON.stringify(info.match(/rating":(\{(.*?)\})/g))
-        .match(/([A-Z]{2}\-[0-9]{2})/g)
-        rating = JSON.stringify(rating).replace("[","").replace("]","")
-        .replace(/[^A-zÀ-ÿ0-9,\-]+/g, "")
-        let roles = JSON
-        .stringify(info.match(/talent":(\[(.*?)\])/g))
-        .split(":[")
-        let actors = JSON.stringify(roles[1])
-        let director = JSON.stringify(roles[2])
-        let writer = JSON.stringify(roles[3])
-        let producers = JSON.stringify(roles[4])
-        let genres = JSON.stringify(info.match(/genre":(\[(.*?)\])/g))
-        .match(/desc\\":(\\(.*?)\\)/g)
-        genres = JSON.stringify(genres).replace(/desc/g,"").replace(/[^A-zÀ-ÿ0-9,\-\s]/g,"")
-        .replace(/\\+|\[|\]|\:|\"/g,"").split(",")
-        let originalTitle = JSON.stringify(info.match(/originaltitle":"([^"]{1,})/g))
-        .replace(/originaltitle/g, "")
-        .replace(/[^A-zÀ-ÿ0-9,\s]+/g, "")
-        .replace(/\\|\[|\]/g, "")
+       
+        let title = ""
+        let imgBack = ""
+        let imgFront = ""
+        let description = ""
+        let year = ""
+        let duration = ""
+        let subbed = ""
+        let dubbed = ""
+        let rating = ""
+        let actors = []
+        let director = []
+        let writer = []
+        let producers = []
+        let genres = []
+        let originalTitle = ""
+        let atts = this.props.details
+        title = atts.title
+        imgBack = atts.image_background
+        imgFront = atts.image_small
+        description = atts.large_description
         
+        if (atts.extendedcommon) {
+            let talent = atts.extendedcommon.roles.role
+            console.log(talent)
+            duration = atts.duration
+            .replace(":", "h ")
+            .replace(":", "min ") + "s"
+            originalTitle = atts.extendedcommon.media.originaltitle
+            subbed = atts.extendedcommon.media.language.subbed
+            dubbed = atts.extendedcommon.media.language.dubbed 
+            rating = atts.extendedcommon.media.rating.code
+            year = atts.extendedcommon.media.publishyear
+            atts
+                .extendedcommon
+                .genres
+                .genre
+                .forEach((genre, index) => {
+                    if (index < atts.extendedcommon.genres.genre.length - 1) {
+                        genres.push(genre.desc + ", ")
+                    } else {
+                        genres.push(genre.desc)
+                    }
+                })
+             talent[0].talents.talent.forEach((ta) => {
+                actors.push(ta.fullname)
+             })
+             talent[1].talents.talent.forEach((ta) => {
+                director.push(ta.fullname)
+             })
+             talent[2].talents.talent.forEach((ta) => {
+                writer.push(ta.fullname)
+             })
+             talent[3].talents.talent.forEach((ta) => {
+                producers.push(ta.fullname)
+             })
+        }
+
         let details = {
             title,
             imgBack,
@@ -84,7 +91,7 @@ const AboutContainer = createReactClass({
     },
     render() {
         let details = this.getInfoDetails()
-        
+
         return <Details {...details}/>
     }
 })

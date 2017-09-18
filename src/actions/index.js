@@ -46,8 +46,8 @@ export function showDetails(titleId) {
                 return {};
             }))
             .then((json) => {
-                console.log('parsed json: ', json);
-                dispatch( { type: SHOW_DETAILS, payload: json } )
+              
+                dispatch( { type: SHOW_DETAILS, payload: json.response.group.common} )
             })
             .catch((err) => { console.log('fetch request failed: ', err) }
             )

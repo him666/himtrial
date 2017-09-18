@@ -6,10 +6,14 @@ const Detail = (props) => {
         backgroundImage: 'url(' + props.imgBack + ')',
         backgroundRepeat: 'no-repeat'
     }
+  
     let rating = props.rating == "null" ? "R" : props.rating
-    let subbed = props.subbed == "true" ? "subtitulada" : undefined
-    let dubbed = props.dubbed == "true" ? "doblada" : undefined
+    let subbed = props.subbed == "true" ? "subtitulada" : null
+    let dubbed = props.dubbed == "true" ? "doblada" : null
     let actors = JSON.stringify(props.actors)
+  
+    let styl2 = dubbed == null ? null : "label label-default"
+    let styl = subbed == null ? null : "label label-default"
     let genres = props.genres.map((genre) => {
         return(<span>
             <span className="link-st">{genre}</span>
@@ -24,21 +28,21 @@ const Detail = (props) => {
                 <div  >
                     
                 <img src={props.imgFront} alt={props.title} className="img-details"></img>
-                {console.log(actors)}
+               
                 
                 <p className = "content-details" >
                 {props.description + "."}
                     <br></br><br></br>
                     <span>{props.year }</span>{'  '}
                     <span>{props.duration }</span>{'  '}
-                    <span className="label label-default">{subbed}</span>{'  '}
-                    <span className="label label-default">{dubbed}</span>{'  '}
+                    <span className={styl}>{subbed}</span>{'  '}
+                    <span className={styl2}>{dubbed}</span>{'  '}
                     <span className="label label-default item-rating">{rating}</span>
                     <br></br>
-                    <span>{'Actor: '}</span><br></br>
-                    <span>{'Director: '}</span><br></br>
-                    <span>{'Escritor: '}</span><br></br>
-                    <span>{'Productor: '}</span><br></br>
+                    <span>{'Actor: ' + props.actors}</span><br></br>
+                    <span>{'Director: ' + props.director}</span><br></br>
+                    <span>{'Escritor: ' + props.writer}</span><br></br>
+                    <span>{'Productor: ' + props.producers}</span><br></br>
                     <span>{'Género: '}</span><span>{genres}</span><br></br>
                     <span>{'Título Orginal: '}</span><span>{props.originalTitle}</span><br></br>
                 </p>
