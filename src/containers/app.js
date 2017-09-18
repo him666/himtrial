@@ -16,34 +16,14 @@ const AppContainer = createReactClass({
   },
   
   getTitlesList() {
-    let info = JSON.stringify(this.props.titles)
-    let ids = info.match(/"id":"(\d+)/g)
-    let titles = info.match(/"title":"([^"]{1,})/g)
-    let imgs = info.match(/image_large":"([^"]{1,})/g)
     let arr  = []
-    ids = JSON
-      .stringify(ids)
-      .replace(/[^0-9,]+/g, "")
-      .split(",")
-    titles = JSON
-      .stringify(titles)
-      .replace(/title/g, "")
-      .replace(/[^A-zÀ-ÿ0-9,\s]+/g, "")
-      .replace(/\\/g, "")
-      .replace("[", "")
-      .replace("]", "")
-      .split(",")
-    imgs = JSON
-      .stringify(imgs)
-      .replace(/[^A-zÀ-ÿ0-9,.:/-\s]+/g, "")
-      .replace(/image_large\\:\\/g, "")
-      .replace("[", "")
-      .replace("]", "")
-      .split(",")
-    //.replace(/[^A-zÀ-ÿ0-9,.:/-\s]+/g,"")
-    for(let i = 0; i < imgs.length; i++ ){
-      arr[i] = {img: imgs[i], title: titles[i], id: ids[i]}
-    }
+    this.props.titles.forEach((titl, index) => {
+      let id  = titl.id
+      let img = titl.image_large
+      let title = titl.title
+      arr[index] = {id, title,img}
+    })
+    console.log(arr)
     return arr
 
   },

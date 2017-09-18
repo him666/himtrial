@@ -28,14 +28,14 @@ class Filter extends Component {
        // console.log(this.props)
        // console.log('yo')
        this.setState({filter: this.refs.filterInput.value})
-       console.log(this)
+      
     }
     render() {
         const { filterVal, filterUpdate } = this.props
         let filteredTitles = this.props.titles.filter((title)=>{
             return title.title.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
         })
-        console.log(this)
+       
         return (
             <div>
                 <div className="search-bar">
